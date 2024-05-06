@@ -1,0 +1,276 @@
+html {
+  line-height: auto;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+}
+h1, h2, h3, h4, p {
+  margin: 0;
+  color: #3C3C3C;
+}
+
+a {
+  background-color: transparent;
+  text-decoration: none;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+td {
+  font-family: ABCDiatype-Light;
+  font-size: 1rem;
+}
+/* Container and Grid Layout */
+.container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  grid-template-areas:
+      "header header header header header"
+      "main main main main main"
+      "footer footer footer footer footer";
+  background-color: #F0F0F4;
+}
+
+.header {
+  grid-area: header;
+}
+
+.landing {
+  padding: 1rem;
+}
+
+.main {
+  grid-area: main;
+  overflow-y: auto; /* Allows this area to scroll */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  grid-row-gap: 5rem;
+}
+
+section {
+  padding-top: 6rem;
+}
+
+
+.footer {
+  grid-area: footer;
+}
+
+/*  */
+
+.border-top {
+  border-top: 6px solid #3C3C3C;
+}
+
+.border-left {
+  border-top: 6px solid #3C3C3C;
+}
+
+.fade {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.3s;
+}
+
+.fade:hover {
+  opacity: 0.5;
+}
+
+.grid video {
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+}
+
+.grid-2 {
+  grid-column: span 2;
+}
+
+.grid-3 {
+  grid-column: span 3;
+}
+
+
+/* Fonts */
+
+@font-face {
+  font-family: 'ABCDiatype-Light'; /*  */
+  src: url('src/fonts/ABCDiatypeEdu-Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Exposure-30'; /*  */
+  src: url('src/fonts/Exposure[-30].woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Exposure+100'; /*  */
+  src: url('src/fonts/Exposure[+100].otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ExposureItalic-20'; /*  */
+  src: url('src/fonts/ExposureItalic[-20].woff') format('woff');
+  font-weight: auto;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'ABCFavorit-Mono'; /*  */
+  src: url('src/fonts/ABCFavoritMonoEdu-Regular.woff') format('woff');
+  font-weight: auto;
+  font-style: italic;
+}
+
+h1 {
+  font-family: 'Exposure-30', serif;
+  font-size: 4rem;
+}
+
+h2{
+  font-family: 'ExposureItalic-20', sans-serif;
+  font-size: 2.5rem;
+  font-style: italic;
+  font-weight: auto;
+}
+
+
+h3{
+  font-family: 'Exposure-30', serif;
+  font-size: 2rem;
+}
+
+p {
+  font-family: 'ABCDiatype-Light', san-serif;
+  font-size: 1.5rem;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .container {
+      grid-template-columns: 1fr; /* Single column layout */
+      grid-template-areas:
+          "header"
+          "main"
+          "footer";
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Three columns for desktop */
+    gap: 20px;
+  }
+
+  .grid-2{
+    grid-column: span 1;
+  }
+
+  .grid-3{
+    grid-column: span 1;
+  }
+
+  .header, .main, .footer {
+      padding: 10px; 
+  }
+
+  h1{
+    font-size: 2rem;
+  }
+
+  h2{
+    font-size: 1.5rem;
+  }
+
+  h3{
+    font-family: 'Exposure-30', serif;
+    font-size: 1.5rem;
+  }
+
+  p{
+    font-size: 1rem;
+  }
+}
+
+
+
+/* Page Styles */
+
+.index.container{
+  background-color: #F0F0F4;
+}
+
+.index h1, .index h2, .index h3, .index h4, .index p {
+  color: #3C3C3C;
+}
+
+.index>.border-top {
+  border-top: 6px solid #3C3C3C;
+}
+
+
+.platforms.container{
+    background-color: white;
+}
+
+.platforms>.border-top {
+  border-top: 6px solid blue;
+}
+
+.platforms h1, .platforms h2, .platforms h3, .platforms h4, .platforms p {
+    color: blue;
+  }
+
+
+.layers h1, .layers h2, .layers h3, .layers h4, .layers p {
+    color: #D9D9D9;
+}
+
+.layers.container {
+    background-color: #7AA64C;
+  }  
+
+.layers>.border-top {
+    border-top: 6px solid #D9D9D9;
+  }
+.layers a{
+  color: #00D1FF;
+}
+
+
+
+.libraries h1, .libraries h2, .libraries h3, .libraries h4, .libraries p {
+    margin: 0;
+    color: #F0F0F4;
+}
+
+.libraries.container {
+    background-color: #3C3C3C;
+}
+
+.libraries>.border-top {
+  border-top: 6px solid #F0F0F4;
+}
+
+.libraries pre{
+  color:#F0F0F4;
+}
+
+
+
+

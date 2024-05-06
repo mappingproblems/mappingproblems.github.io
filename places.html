@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@3.2.1/dist/maplibre-gl.css" crossorigin="anonymous">
+    <script src="https://unpkg.com/maplibre-gl@3.3.1/dist/maplibre-gl.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/pmtiles@2.10.0-beta.0/dist/index.js"></script>
+    <script src="https://unpkg.com/protomaps-themes-base@2.0.0-alpha.5/dist/index.js"></script>
+    <title>Mapping Problems</title>
+</head>
+<body>
+        <div class="container">
+            <header class="header landing">
+                <a class="fade" href="/index">
+                    <h3>Mapping Problems</h3>
+                </a>
+                <h3></h3>
+                <h3>places, but not all</h3>
+            </header>
+            <main class="main border-top">
+                <div id="map"></div>
+            </main>
+            <footer class="footer">
+            </footer>
+        </div>
+        <script type="text/javascript">
+            let protocol = new pmtiles.Protocol();
+            maplibregl.setRTLTextPlugin('https://unpkg.com/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.js');
+            maplibregl.addProtocol("pmtiles",protocol.tile);
+
+            function throttle (callback, limit) {
+                var waiting = false;                      // 
+                return function () {                      // 
+                    if (!waiting) {                       // 
+                        callback.apply(this, arguments);  // 
+                        waiting = true;                   // 
+                        setTimeout(function () {          // 
+                            waiting = false;              // 
+                        }, limit);
+                    }
+                }
+            }
+
+            const map = new maplibregl.Map({
+                hash: true,
+                container: 'map',
+                style: {
+                    version:8,
+                    glyphs:'https://cdn.protomaps.com/fonts/pbf/{fontstack}/{range}.pbf',
+                    sources: {
+                        "overture-pois": {
+                            type: "vector",
+                            url: "pmtiles://https://places-of.s3.amazonaws.com/overture_places_sample.pmtiles",
+                            attribution: '© <a href="https://overturemaps.org">Overture Maps Foundation</a>'
+                        }
+                    },
+                    layers: [
+                    {
+                        'id':'overture-pois',
+                        'type':'circle',
+                        'source':'overture-pois',
+                        'source-layer':'pois',
+                        'filter':[">=",["get","confidence"], 0.0],
+                        'maxzoom': 12,
+                        'paint': {
+                            'circle-color':
+                                ['case',
+                                    ['==',['get','category_main'],'beauty_salon'],'black',
+                                    ['==',['get','category_main'],'hotel'],'black',
+                                    ['==',['get','category_main'],'landmark_and_historical_building'],'black',
+                                    ['==',['get','category_main'],'professional_services'],'black',
+                                    ['==',['get','category_main'],'shopping'],'black',
+                                    ['==',['get','category_main'],'restaurant'],'black',
+                                    ['==',['get','category_main'],'school'],'black',
+                                    ['==',['get','category_main'],'accommodation'],'black',
+                                    'black'
+                                ],
+                            'circle-radius': [
+                                'interpolate',
+                                ['exponential',2],
+                                ['zoom'],
+                                0, 1, 
+                                19, 8 
+                            ],
+                            'circle-stroke-width': [
+                                'interpolate',
+                                ['exponential',2],
+                                ['zoom'],
+                                12, 0, 
+                                14, 2
+                            ],
+                            'circle-stroke-color':'black'
+                        }
+                    },
+                    {
+                        'id':'overture-pois-text',
+                        'type':'symbol',
+                        'source':'overture-pois',
+                        'source-layer':'pois',
+                        'filter':[">",["get","confidence"], 0.0],
+                        'minzoom':1,
+                        'layout': {
+                            'text-allow-overlap': true,
+                            'text-field':"{name}",
+                            'text-font':["Barlow Regular"],
+                            'text-size': [
+                                'interpolate',
+                                ['exponential',2],
+                                ['zoom'],
+                                13, 11, 
+                                16, 14 
+                            ],
+                            'text-offset':[0,0]
+                        },
+                        'paint': {
+                            'text-color':
+                                ['case',
+                                    ['==',['get','category_main'],'beauty_salon'],'black',
+                                    ['==',['get','category_main'],'hotel'],'black',
+                                    ['==',['get','category_main'],'landmark_and_historical_building'],'black',
+                                    ['==',['get','category_main'],'professional_services'],'black',
+                                    ['==',['get','category_main'],'shopping'],'black',
+                                    ['==',['get','category_main'],'restaurant'],'black',
+                                    ['==',['get','category_main'],'school'],'black',
+                                    ['==',['get','category_main'],'accommodation'],'black',
+                                    'black'
+                                ],
+                            'text-halo-width':0,
+                            'text-halo-color':'black'
+                        }
+                    },
+                    ]
+                }
+            });
+
+            function rangeChangedUnthrottled(target) {
+                map.setFilter("overture-pois", [">=",["get","confidence"], target / 100.0]);
+                map.setFilter("overture-pois-text", [">=",["get","confidence"], target / 100.0]);
+                document.getElementById("confidence").innerText = target / 100.0;
+            }
+
+            let rangeChanged = throttle(rangeChangedUnthrottled, 16);
+
+            const popup = new maplibregl.Popup({
+              closeButton: true,
+              closeOnClick: false,
+              maxWidth: "none",
+            });
+
+            map.on('click', 'overture-pois-text', (e) => {
+                if (e.features.length > 0) {
+                    const feature = e.features[0];
+                    popup.setHTML(
+                        `
+                        <table style="font-size:12px">
+                            <tr>
+                                <td>name:</td>
+                                <td>${feature.properties.name}</td>
+                            </tr>
+                            <tr>
+                                <td>category:</td>
+                                <td>${feature.properties.category_main.replace(/_/g, ' ')}</td>
+                            </tr>
+                        </table>
+                        `);
+                    popup.setLngLat(e.lngLat);
+                    popup.addTo(map);
+                }
+            });
+        </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css" />
+    <title>Mapping Problems</title>
+</head>
+<body>
+        <div class="libraries container">
+            <header class="header landing">
+                <a class="fade" href="/index">
+                    <h3>Mapping Problems</h3>
+                </a>
+                <h3></h3>
+                <h3>libraries</h3>
+            </header>
+            <main class="main landing border-top grid">
+                <h3 class="grid-3">maplibre-gl.js (after Ronald Johnson's ARK)</h3>
+                <section class="grid-2">
+                <p>"Internetted Eternities Intertwined"</p>
+                <br> <br>
+                <p>Ronald Johnson’s long poem in 99 parts ARK, written over the course of 20 years, forms a kind of architectural and spiritual complex. Noted for its structure, ARK’s components (Beams) organized under parts titled  Foundations, Spires, Ramparts, gesture towards the construction of a cathedral or vessel. The poems employ a variety of visual and typographical techniques, making the work both a visual and a literary experience. It is monumental, concerned with science and mysticism, form, and altogether cartographic.</p><br> <br>
+                <p>Web Mapping libraries, such as maplibre-gl.js are also texts, whose many component parts are concerned simultaneously with geodesy, algebra, spatial data structures, and visual expression through map form, all inscribed in JavaScript. They are developed over long periods of time, and often in the open source under collaborative authorship models, as in the case of maplibre-gl.js. Considering maplibre’s component parts along the poetics of knowledge proposed by ARK, reveals the possibilities and limitations of intelligence(s) mobilized by web mapping systems:</p><br> <br>
+                <p>Foundations: the code that sets up the environment compatibility (AMD, CommonJS, global), basic configurations, and utilities that support the functionality of the library. This includes functions and methods that initialize map instances, manage configurations, and ensure cross-platform compatibility.</p><br> <br>
+                <p>Spires: the sophisticated features of the library such as the map controls, user interaction handlers, and visual display components. These "spires" are the elements that users interact with directly and that elevate the utility of the basic map to a more engaging user experience, such as zoom controls, rotation features, and interactive pop-ups.</p><br> <br>
+                <p>Ramparts: the APIs and internal methods that link different parts of the library, such as the connection between the map rendering engine and the user interface components, or the linkages between data sources and visual outputs. These connections ensure that the library functions as a coherent whole, where data flow and user inputs seamlessly interact.</p><br> <br>
+            </section>
+                <section class="grid-3">
+                    <h3>The Foundations</h3>
+                    <pre>/* MapLibre GL JS is licensed under the 3-Clause BSD License. Full text of license: https://github.com/maplibre/maplibre-gl-js/blob/v3.3.1/LICENSE.txt */
+                    </pre>
+                    <pre>(function (global, factory) {
+                        typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :</pre>
+                    <pre>typeof define === 'function' && define.amd ? define(factory) :
+                        (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.maplibregl = factory());</pre>
+                </section>
+                <section class="grid-3">
+                    <h3>The Spires</h3>
+                    <pre>
+                        this.options.showUserLocation && "OFF" !== this._watchState && this._updateMarker(e),
+                        this.options.trackUserLocation && "ACTIVE_LOCK" !== this._watchState || this._updateCamera(e),
+                        this.options.showUserLocation && this._dotElement.classList.remove("maplibregl-user-location-dot-stale"),
+                        this.fire(new t.Event("geolocate", e)),
+                        this._finish(); </pre>
+                    <pre>
+                        this._updateCamera = e => {
+                            const i = new t.LngLat(e.coords.longitude, e.coords.latitude),
+                            s = e.coords.accuracy,
+                            a = this._map.getBearing(),
+                            o = t.extend({bearing: a}, this.options.fitBoundsOptions),
+                            r = L.fromLngLat(i, s);
+                            this._map.fitBounds(r, o, {geolocateSource: !0});
+                        },
+                        this._updateMarker = e => {
+                            if (e) {
+                                const i = new t.LngLat(e.coords.longitude, e.coords.latitude);
+                                this._accuracyCircleMarker.setLngLat(i).addTo(this._map),
+                                this._userLocationDotMarker.setLngLat(i).addTo(this._map),
+                                this._accuracy = e.coords.accuracy,
+                                this.options.showUserLocation && this.options.showAccuracyCircle && this._updateCircleRadius();
+                            } else {
+                                this._userLocationDotMarker.remove(),
+                                this._accuracyCircleMarker.remove();
+                            }
+                        };</pre>
+                        <pre>
+                            setDOMContent(t) {
+                                if (this._content) {
+                                    for (; this._content.hasChildNodes();) {
+                                        this._content.firstChild && this._content.removeChild(this._content.firstChild);
+                                    }
+                                } else {
+                                    this._content = i.create("div", "maplibregl-popup-content", this._container);
+                                }
+                                return this._content.appendChild(t), this._createCloseButton(), this._update(), this._focusFirstElement(), this
+                            },
+                            _addClassName(t) {
+                                this._container && this._container.classList.add(t);
+                            },
+                            _removeClassName(t) {
+                                this._container && this._container.classList.remove(t);
+                            },
+                            _setOffset(t) {
+                                return this.options.offset = t, this._update(), this
+                            },
+                            _toggleClassName(t) {
+                                if (this._container) return this._container.classList.toggle(t)
+                            },
+                            _createCloseButton() {
+                                this.options.closeButton && (this._closeButton = i.create("button", "maplibregl-popup-close-button", this._content),
+                                this._closeButton.type = "button",
+                                this._closeButton.setAttribute("aria-label", "Close popup"),
+                                this._closeButton.innerHTML = "&#215;",
+                                this._closeButton.addEventListener("click", this._onClose));
+                            };
+                            </pre>
+                </section>
+                <section class="grid-3">
+                    <h3>The Ramparts</h3>
+                    <pre>try{n=JSON.parse(r.response);}catch(t){return e(t)}</pre>
+        <pre>try{n=new ee(n.type,n.evaluate(t));}catch(t){return this.error(t.message),null}</pre>
+        <pre>try{const t=this.expression.evaluate(this._evaluator);if(null==t||"number"==typeof t&&t!=t)return this._defaultValue;if(this._enumValues&&!(t in this._enumValues))throw new re(`Expected value to be one of ${Object.keys(this._enumValues).map((t=&gt;JSON.stringify(t))).join(", ")}, but found ${JSON.stringify(t)} instead.`);return t}catch(t){return this._warningHistory[t.message]||(this._warningHistory[t.message]=!0,"undefined"!=typeof console&&console.warn(t.message)),this._defaultValue}</pre>
+        <pre>try{if(!Z(t.version,e.version))return [{command:K.setStyle,args:[e]}];Z(t.center,e.center)||r.push({command:K.setCenter,args:[e.center]}),Z(t.zoom,e.zoom)||r.push({command:K.setZoom,args:[e.zoom]}),Z(t.bearing,e.bearing)||r.push({command:K.setBearing,args:[e.bearing]}),Z(t.pitch,e.pitch)||r.push({command:K.setPitch,args:[e.pitch]}),Z(t.sprite,e.sprite)||r.push({command:K.setSprite,args:[e.sprite]}),Z(t.glyphs,e.glyphs)||r.push({command:K.setGlyphs,args:[e.glyphs]}),Z(t.transition,e.transition)||r.push({command:K.setTransition,args:[e.transition]}),Z(t.light,e.light)||r.push({command:K.setLight,args:[e.light]});const n={},i=[];!function(t,e,r,n){let i;for(i in e=e||{},t=t||{})Object.prototype.hasOwnProperty.call(t,i)&&(Object.prototype.hasOwnProperty.call(e,i)||J(i,r,n));for(i in e)Object.prototype.hasOwnProperty.call(e,i)&&(Object.prototype.hasOwnProperty.call(t,i)?Z(t[i],e[i])||("geojson"===t[i].type&&"geojson"===e[i].type&&Y(t,e,i)?r.push({command:K.setGeoJSONSourceData,args:[i,e[i].data]}):X(i,e,r,n)):G(i,e,r));}(t.sources,e.sources,i,n);const a=[];t.layers&&t.layers.forEach((t=&gt;{n[t.source]?r.push({command:K.removeLayer,args:[t.id]}):a.push(t);})),r=r.concat(i),function(t,e,r){e=e||[];const n=(t=t||[]).map(W),i=e.map(W),a=t.reduce(Q,{}),s=e.reduce(Q,{}),o=n.slice(),l=Object.create(null);let u,c,h,p,f,d,y;for(u=0,c=0;u&lt;n.length;u++)h=n[u],Object.prototype.hasOwnProperty.call(s,h)?c++:(r.push({command:K.removeLayer,args:[h]}),o.splice(o.indexOf(h,c),1));for(u=0,c=0;u&lt;i.length;u++)h=i[i.length-1-u],o[o.length-1-u]!==h&&(Object.prototype.hasOwnProperty.call(a,h)?(r.push({command:K.removeLayer,args:[h]}),o.splice(o.lastIndexOf(h,o.length-c),1)):c++,d=o[o.length-u],r.push({command:K.addLayer,args:[s[h],d]}),o.splice(o.length-u,0,h),l[h]=!0);for(u=0;u&lt;i.length;u++)if(h=i[u],p=a[h],f=s[h],!l[h]&&!Z(p,f))if(Z(p.source,f.source)&&Z(p["source-layer"],f["source-layer"])&&Z(p.type,f.type)){for(y in H(p.layout,f.layout,r,h,null,K.setLayoutProperty),H(p.paint,f.paint,r,h,null,K.setPaintProperty),Z(p.filter,f.filter)||r.push({command:K.setFilter,args:[h,f.filter]}),Z(p.minzoom,f.minzoom)&&Z(p.maxzoom,f.maxzoom)||r.push({command:K.setLayerZoomRange,args:[h,f.minzoom,f.maxzoom]}),p)Object.prototype.hasOwnProperty.call(p,y)&&"layout"!==y&&"paint"!==y&&"filter"!==y&&"metadata"!==y&&"minzoom"!==y&&"maxzoom"!==y&&(0===y.indexOf("paint.")?H(p[y],f[y],r,h,y.slice(6),K.setPaintProperty):Z(p[y],f[y])||r.push({command:K.setLayerProperty,args:[h,y,f[y]]}));for(y in f)Object.prototype.hasOwnProperty.call(f,y)&&!Object.prototype.hasOwnProperty.call(p,y)&&"layout"!==y&&"paint"!==y&&"filter"!==y&&"metadata"!==y&&"minzoom"!==y&&"maxzoom"!==y&&(0===y.indexOf("paint.")?H(p[y],f[y],r,h,y.slice(6),K.setPaintProperty):Z(p[y],f[y])||r.push({command:K.setLayerProperty,args:[h,y,f[y]]}));}else r.push({command:K.removeLayer,args:[h]}),d=o[o.lastIndexOf(h)+1],r.push({command:K.addLayer,args:[f,d]});}(a,e.layers,r);}catch(t){console.warn("Unable to compute style diff:",t),r=[{command:K.setStyle,args:[e]}</pre>
+        <pre>try{const e=JSON.parse(t.data);this._dataUpdateable=ge(e,o)?me(e,o):void 0,i(null,e);}catch(e){i(new Error(`Input data given to '${t.source}</pre>
+                </section>
+            </main>
+            <footer class="footer">
+            </footer>
+        </div>
+</body>
+</html>
